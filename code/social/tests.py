@@ -8,7 +8,7 @@ class UserModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        ExtendUser.objects.create(username='Big', email='jhonbara51214@gmail.com', password="Jhonhola1")
+        ExtendUser.objects.create(username='jhon', email='jhonbara51214@gmail.com', password="Jhonhola1")
 
     def test_email_label(self):
         user = ExtendUser.objects.get(id=1)
@@ -19,8 +19,3 @@ class UserModelTest(TestCase):
         user = ExtendUser.objects.get(id=1)
         max_length = user._meta.get_field('username').max_length
         self.assertEquals(max_length, 100)
-    
-    def test_get_absolute_url(self):
-        user = ExtendUser.objects.get(id=1)
-        # This will also fail if the urlconf is not defined.
-        self.assertEquals(user.get_absolute_url(), '/social/extenduser/1')
