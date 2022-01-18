@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
@@ -18,8 +18,8 @@ services:
       - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=z1.settings
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_NAME=entrevista
+      - POSTGRES_USER=z1
+      - POSTGRES_PASSWORD=adminZ1
     depends_on:
       - db

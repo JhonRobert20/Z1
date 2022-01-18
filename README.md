@@ -30,7 +30,30 @@ Copia uno por uno los siguientes comandos
 ```
 $ git clone https://github.com/JhonRobert20/z1.git
 $ cd z1
+$ sudo docker-compose up -d db
+$ sudo docker-compose exec db bash
+```
+
+En este punto estaremos en el bash, dentro de el usar:
+```
+$ psql -U postgres
+```
+En este punto estaremos dentro de la consola de postgres
+```
+$ CREATE USER testUser WITH PASSWORD 'testUser';
+$ CREATE USER z1 WITH PASSWORD 'adminZ1';
+$ CREATE DATABASE test;
+$ CREATE DATABASE entrevista;
+$ GRANT ALL PRIVILEGES ON DATABASE test TO testUser;
+$ GRANT ALL PRIVILEGES ON DATABASE entrevista TO z1;
+$ exit
+$ exit
+```
+Ahora ya podemos utilizar el proyecto:
+```
 $ sudo docker-compose up -d
-$ sudo docker-compose run web python code/manage.py migrate
+$ sudo docker-compose exec web python code/manage.py migrate
+$ sudo docker-compose down
+$ sudo docker-compose up
 ```
 ¡Y ya estaria, el proyecto esta en http://localhost:8000/!

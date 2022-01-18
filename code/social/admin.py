@@ -1,10 +1,11 @@
-import imp
 from django.contrib import admin
-from .models import ExtendUser
 from django.apps import apps
 
-admin.site.register(ExtendUser)
+from .models import ExtendUser
+
 app = apps.get_app_config('graphql_auth')
 
+admin.site.register(ExtendUser)
+
 for model_name, model in app.models.items():
-	admin.site.register(model)
+    admin.site.register(model)
