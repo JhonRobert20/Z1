@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class ExtendUser(AbstractUser):
+class User(AbstractUser):
 
     email = models.EmailField(
         blank=False, max_length=254, verbose_name="email", unique=True, null=False)

@@ -5,6 +5,7 @@ services:
     image: postgres
     volumes:
       - ./db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
@@ -13,7 +14,7 @@ services:
     build: .
     command: python code/manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./code:/code/code
     ports:
       - "8000:8000"
     environment:

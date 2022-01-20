@@ -17,6 +17,8 @@ Se utilizan tecnologias tales como:
 - Postgres
 - GraphQL
 
+Para las notificaiones se utilizaria PushBullet, cada vez que se creara un nuevo post y fuese publico o protegido se enviaria a las personas que te siguen una notificación
+
 Muchas gracias!
 # Requerimientos
 Para utilizar el proyecto se necesita docker, docker-compose y git
@@ -30,16 +32,7 @@ Copia uno por uno los siguientes comandos
 ```
 $ git clone https://github.com/JhonRobert20/z1.git
 $ cd z1
-$ sudo docker-compose up -d db
-$ sudo docker-compose exec db psql -U postgres
-```
-En este punto estaremos dentro de la consola de postgres
-```
-$ CREATE USER z1 WITH PASSWORD 'adminZ1';
-$ CREATE DATABASE entrevista;
-$ GRANT ALL PRIVILEGES ON DATABASE entrevista TO z1;
-$ ALTER USER z1 CREATEDB;
-$ exit
+$ sudo docker-compose up -d
 ```
 Ahora ya podemos utilizar el proyecto:
 ```
@@ -50,8 +43,34 @@ $ sudo docker-compose up -d
 ```
 ¡Y ya estaria, el proyecto esta en http://localhost:8000/!
 
-# Test
+# Guia de uso
+### Crear super usuario
+Si queremos ver como afectan los cambios que vayamos efectuando, que mejor manera que create un super usuario
 ```
-$ sudo docker-compose exec web bash
-$ python code/manage.py test social
+$ sudo docker-compose exec web python code/manage.py createsuperuser
 ```
+Podemos ir a [GraphQL](http:/localhost:8000/graphql)
+
+Ahora probemos a crear un usuario, antes de nada si quieres ver tus mensajes en la consola tienes varias opciones,
+si deseas unicamnete usa
+`sudo docker-compose logs -f web` siempre que hayas utilizado antes `sudo docker-compose up -d`.
+<br/>
+
+Si no puedes simplemente usar `sudo docker-compose up` y tendras los logs disponibles, son necesarios para la simulacion de envio de emails
+
+
+Bien ahora provemos a crear un usuario:
+![Registro](/fotos/register_graphql.png)
+Al crear un usuario nos saldra esto en la consola, necesitaremos copiar el token
+![Consola Token](/fotos/verification_token_console.png)
+
+Podemos acceder al [admin panel](http:/localhost:8000/admin) con el *super usuario* para comprobar que el nuevo usuario no esta verificado.
+![Registro](/fotos/not_verification_admin_panel.png)
+
+Ahora procedamos a verificar nuestra cuenta con el token antes obtenido
+![Registro](/fotos/verification_graphql.png)
+![Registro](/fotos/verification_admin_panel.png)
+
+
+
+Deberemos guardarnos el token

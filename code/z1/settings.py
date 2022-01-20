@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 
@@ -38,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'schema',
-    'social.apps.SocialConfig',
+    'users.apps.UsersConfig',
+    'follows.apps.FollowsConfig',
+    'posts.apps.PostsConfig',
     'graphene_django',
     'graphql_auth',
     'django_filters',
@@ -122,15 +124,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = 'static/'
-AUTH_USER_MODEL = 'social.ExtendUser'
+AUTH_USER_MODEL = 'users.User'
 
 GRAPHENE = {
-    'SCHEMA': 'schema.schema.schema',
+    'SCHEMA': 'z1.schema.schema',
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
     ],
@@ -145,12 +143,21 @@ GRAPHQL_JWT = {
     "JWT_ALLOW_ANY_CLASSES": [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
+        "graphql_auth.mutations.ResendActivationEmail",
+        "graphql_auth.mutations.SendPasswordResetEmail",
+        "graphql_auth.mutations.PasswordReset",
         "graphql_auth.mutations.ObtainJSONWebToken",
+        "graphql_auth.mutations.VerifyToken",
+        "graphql_auth.mutations.RefreshToken",
+        "graphql_auth.mutations.VerifySecondaryEmail",
     ],
     "JWT_VERIFY_EXPIRATION": True,
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=60),
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    "JWT_AUTH_HEADER_PREFIX": "JWT",
 }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+APPEND_SLASH = False
