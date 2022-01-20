@@ -11,6 +11,7 @@ class CreatePostMutation(graphene.relay.ClientIDMutation):
     class Input:
         title = graphene.String(required=True)
         summary = graphene.String(required=True)
+        visibility = graphene.String()
 
     post = graphene.Field(PostNode)
     success = graphene.Boolean()
@@ -36,6 +37,7 @@ class UpdatePostMutation(graphene.relay.ClientIDMutation):
         id = graphene.ID(required=True)
         title = graphene.String()
         summary = graphene.String()
+        visibility = graphene.String()
 
     post = graphene.Field(PostNode)
     success = graphene.Boolean()
